@@ -5,6 +5,7 @@
  */
 package com.deshpande;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -13,8 +14,9 @@ import java.util.Date;
  *
  * @author Vinayak
  */
-public class Job implements Comparable<Job> {
+public class Job implements Comparable<Job>, Serializable {
 
+    private final long serialVersionUID = 1L;
     private int id;
     private boolean active;
     private LocalDate dateCreated;
