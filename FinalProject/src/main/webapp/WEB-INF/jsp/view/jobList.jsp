@@ -4,7 +4,7 @@
     Created on : Apr 13, 2021, 7:46:06 PM
     Author     : Vinayak
 --%>
-<jsp:useBean id="activeJobs" class="com.deshpande.Job" scope="session" />
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,8 +28,8 @@
                 <c:forEach items="${activeJobs}" var="job" begin="${begin}" end="${end}">
                     <div class="job">
                         <p><c:out value="${fn:escapeXml(job.title)}"/><br>
-                            <c:out value="${fn:escapeXml(job.city)}"/>&nbsp;
-                            <c:out value="${fn:escapeXml(job.department)}" /></p>
+                            <c:out  value="${fn:escapeXml(job.city)} , ${fn:escapeXml(job.state)}"/><br>
+                            <c:out  value="${fn:escapeXml(job.department)}" /></p>
 
                     </div>
                 </c:forEach>
