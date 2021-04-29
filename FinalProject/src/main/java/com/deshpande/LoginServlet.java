@@ -7,11 +7,14 @@ package com.deshpande;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Hashtable;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -20,6 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ApplicationServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
+    private static final Map<String, String> userDatabase = new Hashtable<>();
+
+    public LoginServlet() {
+        userDatabase.put("User1", "password1");
+        userDatabase.put("User2", "password2");
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,7 +46,7 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
+            out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
@@ -58,7 +67,17 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        if (request.getParameter("logout") != null) {
+            session.invalidate();
+            response.sendRedirect("login");
+            return;
+        } else if (session.getAttribute("username") != null) {
+            response.sendRedirect("jobs");
+            return;
+        }
+        request.setAttribute("loginFailed", false);
+        request.getRequestDispatcher("/WEB-INF/jsp/view/login.jsp").forward(request, response);
     }
 
     /**
@@ -72,7 +91,22 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        if (session.getAttribute("username") != null) {
+            response.sendRedirect("tickets");
+            return;
+        }
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        if (username == null || password == null || !LoginServlet.userDatabase.containsKey(username) || !password.equals(LoginServlet.userDatabase.get(username))) {
+            request.setAttribute("loginFailed", true);
+            request.getRequestDispatcher("/WEB-INF/jsp/view/login.jsp").forward(request, response);
+        } else {
+            session.setAttribute("username", username);
+            request.changeSessionId();
+            response.sendRedirect("jobs");
+        }
     }
 
     /**

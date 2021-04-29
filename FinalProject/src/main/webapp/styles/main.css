@@ -8,3 +8,108 @@ and open the template in the editor.
     Author     : Vinayak
 */
 
+*{
+    box-sizing: border-box;
+    max-width: 100%
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: hsl(225, 16%, 25%);
+    margin: 50px 0;
+}
+
+.container{
+    background-color: hsl(150, 16%, 15%);
+    color: #fff;
+    text-align: center;
+    width: 420px;
+    margin: 0px auto;
+    padding: 20px;
+}
+.active{
+    color: whitesmoke;
+}
+h2{
+    font-size: 32px;
+    font-weight: 300;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin: 10px 0 0;
+}
+
+input,
+textarea {
+    width: 100%;
+    display: block;
+    padding: 10px;
+    font-size: 13px;
+    border: 1px solid hsl(225, 16%, 15%);
+    background-color: hsl(225, 16%, 25%);
+    color: hsl(225, 16%, 75%);
+    font-weight: 500;
+}
+input:focus,
+textarea:focus {
+    outline: none;
+    border: 1px solid hsl(225, 16%, 75%);
+    background-color: hsl(225, 16%, 45%);
+    color: hsl(225, 16%, 95%);
+}
+input[type="submit"] {
+    background-color: #3371ff;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin: 20px auto 0;
+    width: 50%;
+    border: 3px solid hsl(225, 16%, 45%);
+}
+input[type="submit"]:hover {
+    background-color: #1cba43;
+    border: 3px solid hsl(225, 16%, 95%);
+}
+input[type="submit"]:active {
+    outline: none;
+    background-color: #941aba;
+}
+.error {
+    margin: 0 0 5px;
+    font-weight: bold;
+    color: hsl(225, 16%, 75%);
+}
+
+@media only screen and (min-width: 768px) {
+    .container {
+        width: 728px;
+    }
+    form {
+        width: 420px;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (min-width: 960px) {
+    .container {
+        width: 920px;
+    }
+    form {
+        width: 500px;
+    }
+    .column {
+        width: 49%;
+        float: left;
+    }
+    .one {
+        margin-right: 1%;
+    }
+    .two {
+        margin-left: 1%;
+    }
+}

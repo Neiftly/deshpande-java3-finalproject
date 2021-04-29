@@ -1,1 +1,1 @@
-<c:redirect url="jobs" />
+<c:redirect url="/jobs" />

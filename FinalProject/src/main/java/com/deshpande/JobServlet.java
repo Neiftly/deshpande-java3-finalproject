@@ -163,6 +163,15 @@ public class JobServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("username") == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "songs";
+        }
         processRequest(request, response);
     }
 
