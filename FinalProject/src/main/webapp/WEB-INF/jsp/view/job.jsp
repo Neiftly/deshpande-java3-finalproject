@@ -21,7 +21,7 @@
                 <a href="<c:url value="/jobs"/>">View Jobs</a>
                 <a href="<c:url value="/applications"/>">Applications</a>
             </nav>
-            <div class="jobdescription">
+            <div class="column one">
 
                 <h3>${fn:escapeXml(job.title)}</h3>
                 <p><span>Location:</span>${fn:escapeXml(job.city)}, ${fn:escapeXml(job.state)}</p>
@@ -48,7 +48,7 @@
                         </c:otherwise>
                     </c:choose></p>
             </div>
-            <div class="form">
+            <div class="column two">
                 <form method="POST" action="<c:url value="/application" />" enctype="multipart/form-data">
                     <label for="firstName">First Name:</label>
                     <input type="text" name="firstName" id="firstName" /><br><br>
