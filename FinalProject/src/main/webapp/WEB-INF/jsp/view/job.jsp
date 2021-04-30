@@ -8,22 +8,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>${job.title}</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-        <link href="styles/main.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="container">
-            <nav>
-                <a href="<c:url value="/jobs"/>">View Jobs</a>
-                <a href="<c:url value="/applications"/>">Applications</a>
-            </nav>
-            <div class="column one">
+    <t:head htmlTitle="${job.title}"></t:head>
+        <body>
+            <t:nav></t:nav>
+            <div class="container">
+            
+                <div class="column one">
 
-                <h3>${fn:escapeXml(job.title)}</h3>
+                    <h3>${fn:escapeXml(job.title)}</h3>
                 <p><span>Location:</span>${fn:escapeXml(job.city)}, ${fn:escapeXml(job.state)}</p>
                 <p><span>Status:</span><c:choose>
                         <c:when test = "${job.fullTime}">
@@ -49,7 +41,7 @@
                     </c:choose></p>
             </div>
             <div class="column two">
-                <form method="POST" action="<c:url value="/application" />" enctype="multipart/form-data">
+                <form method="POST" action="<c:url value="/applications" />" enctype="multipart/form-data">
                     <label for="firstName">First Name:</label>
                     <input type="text" name="firstName" id="firstName" /><br><br>
                     <label for="lastName">Last Name:</label>

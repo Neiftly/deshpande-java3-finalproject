@@ -26,15 +26,20 @@ body {
     width: 420px;
     margin: 0px auto;
     padding: 20px;
-    height: auto;
+    overflow:auto;
+}
+.column{
+    background-color: steelblue;
 }
 nav{
+    background-color: steelblue;
     border: 2px solid whitesmoke;
     border-radius: 4px;
     margin: 0 0 10px;
     font-size: 16px;
     padding: 10px 15px;
     display: inline-block;
+    align-self: center;
 
 }
 .job a{

@@ -7,22 +7,14 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Job Listings</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-        <link href="styles/main.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="container">
+    <t:head htmlTitle="Job Listings"></t:head>
+        <body>
+            <t:nav></t:nav>
             
-            <nav>
-                <a href="<c:url value="/jobs"/>">View Jobs</a>
-                <a href="<c:url value="/applications"/>">Applications</a>
-            </nav>
-            <h2>Job Listings</h2>
-            <div class="pagination">
+            <div class="container">
+                <h2>Job Listings</h2>
+
+                <div class="pagination">
                 <c:forEach var="i" begin="1" end="${maxPages}">
                     <a <c:if test="${currentPage == i}">class="active"</c:if>
                                                         href="<c:url value="/jobs">
