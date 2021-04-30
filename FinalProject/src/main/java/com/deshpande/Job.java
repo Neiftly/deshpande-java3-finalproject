@@ -26,12 +26,12 @@ public class Job implements Comparable<Job>, Serializable {
     private boolean fullTime;
     private String department;
     private String experience;
-    private String wageCatagory;
+    private String wageCategory;
     private double salary;
 
     public Job(int id, boolean active, LocalDate dateCreated, String title,
             String city, String state, boolean fullTime, String department,
-            String experience, String wageCatagory, double salary) {
+            String experience, String wageCategory, double salary) {
         this.id = id;
         this.active = active;
         this.dateCreated = dateCreated;
@@ -41,7 +41,7 @@ public class Job implements Comparable<Job>, Serializable {
         this.fullTime = fullTime;
         this.department = department;
         this.experience = experience;
-        this.wageCatagory = wageCatagory;
+        this.wageCategory = wageCategory;
         this.salary = salary;
     }
 
@@ -55,7 +55,7 @@ public class Job implements Comparable<Job>, Serializable {
         this.fullTime = true;
         this.department = "Default Department";
         this.experience = "Default Experience";
-        this.wageCatagory = "Default Wage Catagory";
+        this.wageCategory = "Default Wage Category";
         this.salary = 15.00f;
     }
 
@@ -131,12 +131,12 @@ public class Job implements Comparable<Job>, Serializable {
         this.experience = experience;
     }
 
-    public String getWageCatagory() {
-        return wageCatagory;
+    public String getWageCategory() {
+        return wageCategory;
     }
 
-    public void setWageCatagory(String wageCatagory) {
-        this.wageCatagory = wageCatagory;
+    public void setWageCategory(String wageCatagory) {
+        this.wageCategory = wageCatagory;
     }
 
     public double getSalary() {

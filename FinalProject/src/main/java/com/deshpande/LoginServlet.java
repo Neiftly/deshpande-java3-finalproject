@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Vinayak
  */
-@WebServlet(name = "ApplicationServlet", urlPatterns = {"/login"})
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
     private static final Map<String, String> userDatabase = new Hashtable<>();

@@ -16,11 +16,12 @@
     </head>
     <body>
         <div class="container">
-            <h2>Listings</h2>
+            
             <nav>
-                <a href="/jobs">View Jobs</a>
-                <a href="/applications">Applications</a>
+                <a href="<c:url value="/jobs"/>">View Jobs</a>
+                <a href="<c:url value="/applications"/>">Applications</a>
             </nav>
+            <h2>Job Listings</h2>
             <div class="pagination">
                 <c:forEach var="i" begin="1" end="${maxPages}">
                     <a <c:if test="${currentPage == i}">class="active"</c:if>
@@ -33,7 +34,10 @@
             <div class="jobs">
                 <c:forEach items="${activeJobs}" var="job" begin="${begin}" end="${end}">
                     <div class="job">
-                        <a href="/jobs?id=${job.id}"><c:out value="${fn:escapeXml(job.title)}"/></a>
+                        <a class="title" href="<c:url value="/jobs">
+                               <c:param name="action" value="view" />
+                               <c:param name="id" value="${job.id}" />
+                           </c:url>"><c:out value="${fn:escapeXml(job.title)}"/></a>
                         <br><c:out  value="${fn:escapeXml(job.city)}, ${fn:escapeXml(job.state)}"/>
                         &nbsp;<c:out  value="${fn:escapeXml(job.department)}" /><br><br>
 

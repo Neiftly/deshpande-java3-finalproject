@@ -120,7 +120,7 @@ public class JobServlet extends HttpServlet {
         } catch (ParserConfigurationException | IOException | SAXException ex) {
             return;
         }
-        
+
         int page = 1;
         int jobsPerPage = 4;
         int begin = 0;
@@ -170,9 +170,15 @@ public class JobServlet extends HttpServlet {
         }
         String action = request.getParameter("action");
         if (action == null) {
-            action = "songs";
+            action = "jobs";
         }
-        processRequest(request, response);
+        if (action.equals("jobs")) {
+            processRequest(request, response);
+        }
+        if (action.equals("view")) {
+            viewJob(request, response);
+        }
+
     }
 
     /**
@@ -186,7 +192,21 @@ public class JobServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        if (session.getAttribute("id") == null) {
+            response.sendRedirect("jobs");
+            return;
+        }
+        int jobID;
+        try {
+            jobID = Integer.parseInt(request.getParameter("id"));
+        } catch (Exception ex) {
+            response.sendRedirect("jobs");
+            return;
+        }
+        session.setAttribute("id", jobID);
+        request.getRequestDispatcher("/WEB-INF/jsp/view/job.jsp").forward(request, response);
+
     }
 
     /**
@@ -198,5 +218,30 @@ public class JobServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void viewJob(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (request.getParameter("id") == null) {
+            response.sendRedirect("jobs");
+            return;
+        }
+        Job job = new Job();
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            
+            for (Job j : jobs) {
+                if (j.getId() == id) {
+                    job = j;
+                }
+            }
+        } catch(Exception ex) {
+            response.sendRedirect("jobs");
+            return;
+        }
+        
+        session.setAttribute("job", job);
+        request.getRequestDispatcher("/WEB-INF/jsp/view/job.jsp").forward(request, response);
+
+    }
 
 }
