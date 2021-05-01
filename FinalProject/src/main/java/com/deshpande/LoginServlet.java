@@ -93,7 +93,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("username") != null) {
-            response.sendRedirect("tickets");
+            response.sendRedirect("jobs");
             return;
         }
 

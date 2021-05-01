@@ -205,7 +205,7 @@ public class JobServlet extends HttpServlet {
             return;
         }
         session.setAttribute("id", jobID);
-        request.getRequestDispatcher("/WEB-INF/jsp/view/job.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/jsp/view/job.jsp").forward(request, response);
 
     }
 
@@ -238,8 +238,9 @@ public class JobServlet extends HttpServlet {
             response.sendRedirect("jobs");
             return;
         }
-        
+        Application application = new Application();
         session.setAttribute("job", job);
+        session.setAttribute("application", application);
         request.getRequestDispatcher("/WEB-INF/jsp/view/job.jsp").forward(request, response);
 
     }

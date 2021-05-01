@@ -99,7 +99,7 @@ input[type="submit"] {
     border: 3px solid hsl(225, 16%, 45%);
 }
 input[type="submit"]:hover {
-    background-color: #1cba43;
+    background-color: green;
     border: 3px solid hsl(225, 16%, 95%);
 }
 input[type="submit"]:hover {
@@ -119,7 +119,7 @@ input[type="reset"] {
 }
 
 input[type="reset"]:hover {
-    background-color: #1cba43;
+    background-color: red;
     border: 3px solid hsl(225, 16%, 95%);
 }
 

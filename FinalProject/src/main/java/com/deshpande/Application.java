@@ -5,6 +5,7 @@
  */
 package com.deshpande;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 
@@ -12,14 +13,9 @@ import java.time.LocalDate;
  *
  * @author Vinayak
  */
-public class Application implements Comparable<Application> {
-    private String title;
-    private String location;
-    private boolean fullTime;
-    private String department;
-    private String experience;
-    private double salary;
-    private String jobStatement;
+public class Application implements Comparable<Application>, Serializable {
+    
+    private String jobTitle;
     private String firstName;
     private String lastName;
     private String email;
@@ -31,23 +27,20 @@ public class Application implements Comparable<Application> {
     private int jobId;
     private Instant dateTimeSubmitted;
     private boolean active;
-    private String firstNameError;
-    private String lastNameError;
-    private String emailError;
-    private String phoneError;
-    private String resumeError;
-    private String salaryError;
-    private String startDateError;
+    private String firstNameError = "";
+    private String lastNameError = "";
+    private String emailError = "";
+    private String phoneError = "";
+    private String resumeError = "";
+    private String salaryError = "";
+    private String startDateError = "";
     private final String dataText = "Invalid Data Entered";
 
-    public Application(String title, String location, boolean fullTime, String department, String experience, double salary, String jobStatement, String firstName, String lastName, String email, String phone, Attachment resumeUpload, double desiredSalary, LocalDate earliestStartDate, int id, int jobId, Instant dateTimeSubmitted, boolean active, String firstNameError, String lastNameError, String emailError, String phoneError, String resumeError, String salaryError, String startDateError) {
-        this.title = title;
-        this.location = location;
-        this.fullTime = fullTime;
-        this.department = department;
-        this.experience = experience;
-        this.salary = salary;
-        this.jobStatement = jobStatement;
+    public Application(String jobTitle, String firstName, String lastName, String email,
+            String phone, Attachment resumeUpload, double desiredSalary,
+            LocalDate earliestStartDate, int id, int jobId,
+            Instant dateTimeSubmitted) {
+        this.jobTitle = jobTitle;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -58,98 +51,31 @@ public class Application implements Comparable<Application> {
         this.id = id;
         this.jobId = jobId;
         this.dateTimeSubmitted = dateTimeSubmitted;
-        this.active = active;
-        this.firstNameError = firstNameError;
-        this.lastNameError = lastNameError;
-        this.emailError = emailError;
-        this.phoneError = phoneError;
-        this.resumeError = resumeError;
-        this.salaryError = salaryError;
-        this.startDateError = startDateError;
+        this.active = true;
     }
 
     public Application() {
-        this.title = "Default Title";
-        this.location = "Default Location";
-        this.fullTime = true;
-        this.department = "Default Department";
-        this.experience = "Default Experience";
-        this.salary = 15.00f;
-        this.jobStatement = "Default Statement";
+        this.jobTitle = "Job";
         this.firstName = "J";
         this.lastName = "Doe";
         this.email = "J.Doe@email.com";
-        this.phone = "111-111-1111";
+        this.phone = "123-456-7890";
         this.resumeUpload = null;
-        this.desiredSalary = 15.00f;
+        this.desiredSalary = 0.00f;
         this.earliestStartDate = LocalDate.now();
         this.id = 1;
         this.jobId = 1;
         this.dateTimeSubmitted = Instant.now();
         this.active = true;
-        this.firstNameError = dataText;
-        this.lastNameError = dataText;
-        this.emailError = dataText;
-        this.phoneError = dataText;
-        this.resumeError = dataText;
-        this.salaryError = dataText;
-        this.startDateError = dataText;
+        
     }
 
-    public String getTitle() {
-        return title;
+    public String getJobTitle() {
+        return jobTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public boolean isFullTime() {
-        return fullTime;
-    }
-
-    public void setFullTime(boolean fullTime) {
-        this.fullTime = fullTime;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public void setExperience(String experience) {
-        this.experience = experience;
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
-    public String getJobStatement() {
-        return jobStatement;
-    }
-
-    public void setJobStatement(String jobStatement) {
-        this.jobStatement = jobStatement;
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
     public String getFirstName() {
@@ -296,9 +222,34 @@ public class Application implements Comparable<Application> {
         this.startDateError = startDateError;
     }
 
+    public boolean hasErrors(){
+        if(!"".equals(firstNameError)){
+            return true;
+        }
+        if(!"".equals(lastNameError)){
+            return true;
+        }
+        if(!"".equals(emailError)){
+            return true;
+        }
+        if(!"".equals(phoneError)){
+            return true;
+        }
+        if(!"".equals(resumeError)){
+            return true;
+        }
+        if(!"".equals(salaryError)){
+            return true;
+        }
+        if(!"".equals(startDateError)){
+            return true;
+        }
+            
+        return false;
+    }
     @Override
     public String toString() {
-        return "Title: " + title + "\nFirst Name: " + firstName +
+        return "Title: " + jobTitle + "\nFirst Name: " + firstName +
                 "\nLast Name: " + lastName + "\nEmail: " + email;
     }
 

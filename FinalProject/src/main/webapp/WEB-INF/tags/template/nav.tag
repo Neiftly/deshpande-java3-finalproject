@@ -14,4 +14,5 @@
 <nav>
     <a href="<c:url value="/jobs"/>">View Jobs</a>
     <a href="<c:url value="/applications"/>">Applications</a>
+    <a href="<c:url value="/login?logout" />">Logout</a>
 </nav>

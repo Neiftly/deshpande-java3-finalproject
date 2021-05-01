@@ -5,11 +5,13 @@
  */
 package com.deshpande;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Vinayak
  */
-public class Attachment {
+public class Attachment implements Serializable {
 
     private String name;
     private byte[] contents;

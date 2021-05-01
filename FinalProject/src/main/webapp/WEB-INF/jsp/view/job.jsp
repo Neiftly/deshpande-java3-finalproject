@@ -10,14 +10,14 @@
 <html>
     <t:head htmlTitle="${job.title}"></t:head>
         <body>
-            <t:nav></t:nav>
+        <t:nav></t:nav>
             <div class="container">
-            
+                <h1>Listing</h1>
                 <div class="column one">
 
-                    <h3>${fn:escapeXml(job.title)}</h3>
-                <p><span>Location:</span>${fn:escapeXml(job.city)}, ${fn:escapeXml(job.state)}</p>
-                <p><span>Status:</span><c:choose>
+                    <h2>${fn:escapeXml(job.title)}</h2>
+                <p>Location:&emsp;${fn:escapeXml(job.city)}, ${fn:escapeXml(job.state)}</p>
+                <p>Status:&emsp;<c:choose>
                         <c:when test = "${job.fullTime}">
                             Full Time
                         </c:when>
@@ -26,10 +26,10 @@
                         </c:otherwise>
                     </c:choose>
                 </p>
-                <p><span>Department:</span> ${fn:escapeXml(job.department)}</p>
-                <p><span>Experience:</span> ${fn:escapeXml(job.experience)}</p>
+                <p>Department:&emsp; ${fn:escapeXml(job.department)}</p>
+                <p>Experience:&emsp; ${fn:escapeXml(job.experience)}</p>
                 <c:set var="salary" value="${job.salary}"/>
-                <p>Salary:<fmt:formatNumber value = "${salary}" 
+                <p>Salary:&emsp;<fmt:formatNumber value = "${salary}" 
                                   type = "currency"/>
                     <c:choose>
                         <c:when test = "${job.wageCategory == 'Salaried'}">
@@ -41,21 +41,30 @@
                     </c:choose></p>
             </div>
             <div class="column two">
+                <h2>Apply:</h2>
                 <form method="POST" action="<c:url value="/applications" />" enctype="multipart/form-data">
                     <label for="firstName">First Name:</label>
-                    <input type="text" name="firstName" id="firstName" /><br><br>
+                    <input type="text" name="firstName" id="firstName" placeholder="${fn:escapeXml(application.firstName)}" required />
+                    <span name="fNameError">${application.firstNameError}</span><br><br>
                     <label for="lastName">Last Name:</label>
-                    <input type="text" name="lastName" id="lastName" /><br><br>
+                    <input type="text" name="lastName" id="lastName" placeholder="${fn:escapeXml(application.lastName)}" required/>
+                    <span name="lNameError">${application.lastNameError}</span><br><br>
                     <label for="email">Email:</label>
-                    <input type="email" name="email" id="email"/>
+                    <input type="email" name="email" id="email" placeholder="${fn:escapeXml(application.email)}" required/>
+                    <span name="emailError">${application.emailError}</span><br><br>
                     <label for="phone">Phone:</label>
-                    <input type="tel" name="phone" id="phone" patter="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+                    <input type="tel" name="phone" id="phone" required
+                           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="${fn:escapeXml(application.phone)}" required />
+                    <span name="phoneError">${application.phoneError}</span><br><br>
                     <label for="resumeUpload">Resume: </label>
-                    <input type="file" name="resumeUpload" id="resumeUpload"/>
+                    <input type="file" name="resumeUpload" id="resumeUpload" placeholder="${fn:escapeXml(application.resumeUpload)}" required/>
+                    <span name="resumeUploadError">${application.resumeError}</span><br><br>
                     <label for="desiredSalary">Desired Salary:</label>
-                    <input type="number" min="1" step="any" class="desiredSalary" id="desiredSalary" />
+                    <input type="number" min="1" step="any" class="desiredSalary" id="desiredSalary" placeholder="${fn:escapeXml(application.desiredSalary)}" required/>
+                    <span name="desiredsalaryError">${application.salaryError}</span><br><br>
                     <label for="earliestStartDate">Earliest Start Date:</label>
-                    <input type="datetime-local" class="earliestStartDate" id="earliestStartDate"/>
+                    <input type="datetime-local" class="earliestStartDate" id="earliestStartDate" placeholder="${fn:escapeXml(application.earliestStartDate)}" required/>
+                    <span name="earliestStartDateError">${application.startDateError}</span><br><br>
                     <input type="submit" value="Apply" />
                     <input type="reset">
                 </form>
