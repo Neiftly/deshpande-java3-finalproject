@@ -60,10 +60,10 @@
                     <input type="file" name="resumeUpload" id="resumeUpload" placeholder="${fn:escapeXml(application.resumeUpload)}" required/>
                     <span name="resumeUploadError">${application.resumeError}</span><br><br>
                     <label for="desiredSalary">Desired Salary:</label>
-                    <input type="number" min="1" step="any" class="desiredSalary" id="desiredSalary" placeholder="${fn:escapeXml(application.desiredSalary)}" required/>
+                    <input type="number" min="1" step="any" name="desiredSalary" id="desiredSalary" placeholder="${fn:escapeXml(application.desiredSalary)}" required/>
                     <span name="desiredsalaryError">${application.salaryError}</span><br><br>
                     <label for="earliestStartDate">Earliest Start Date:</label>
-                    <input type="date" class="earliestStartDate" id="earliestStartDate" placeholder="${fn:escapeXml(application.earliestStartDate)}" required/>
+                    <input type="date" name="earliestStartDate" id="earliestStartDate" placeholder="${fn:escapeXml(application.earliestStartDate)}" required/>
                     <span name="earliestStartDateError">${application.startDateError}</span><br><br>
                     <input type="submit" value="Apply" />
                     <input type="reset">
