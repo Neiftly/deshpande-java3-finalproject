@@ -9,6 +9,7 @@
 <html>
     <t:head htmlTitle="Login/Logout"></t:head>
         <body>
+        <t:nav></t:nav>
             <div class="container">
                 <h2>Login</h2>
                 <p>You must log in to access the jobs.</p>

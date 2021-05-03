@@ -70,10 +70,10 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         if (request.getParameter("logout") != null) {
             session.invalidate();
-            response.sendRedirect("login");
+            response.sendRedirect("jobs");
             return;
         } else if (session.getAttribute("username") != null) {
-            response.sendRedirect("jobs");
+            response.sendRedirect("applications");
             return;
         }
         request.setAttribute("loginFailed", false);
@@ -93,7 +93,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("username") != null) {
-            response.sendRedirect("jobs");
+            response.sendRedirect("applications");
             return;
         }
 
@@ -105,7 +105,7 @@ public class LoginServlet extends HttpServlet {
         } else {
             session.setAttribute("username", username);
             request.changeSessionId();
-            response.sendRedirect("jobs");
+            response.sendRedirect("applications");
         }
     }
 

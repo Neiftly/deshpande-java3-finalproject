@@ -63,7 +63,7 @@
                     <input type="number" min="1" step="any" class="desiredSalary" id="desiredSalary" placeholder="${fn:escapeXml(application.desiredSalary)}" required/>
                     <span name="desiredsalaryError">${application.salaryError}</span><br><br>
                     <label for="earliestStartDate">Earliest Start Date:</label>
-                    <input type="datetime-local" class="earliestStartDate" id="earliestStartDate" placeholder="${fn:escapeXml(application.earliestStartDate)}" required/>
+                    <input type="date" class="earliestStartDate" id="earliestStartDate" placeholder="${fn:escapeXml(application.earliestStartDate)}" required/>
                     <span name="earliestStartDateError">${application.startDateError}</span><br><br>
                     <input type="submit" value="Apply" />
                     <input type="reset">

@@ -160,7 +160,7 @@ input[type="reset"]:active {
         background-color: goldenrod;
     }
     .pagination a.active {
-        background-color: #ffcc66;
+        background-color: darkorange;
     }
 
     @media only screen and (min-width: 960px) {
