@@ -61,7 +61,7 @@ public class Application implements Comparable<Application>, Serializable {
         this.email = "J.Doe@email.com";
         this.phone = "123-456-7890";
         this.resumeUpload = null;
-        this.desiredSalary = 0.00f;
+        this.desiredSalary = 0.00;
         this.earliestStartDate = LocalDate.now();
         this.id = 1;
         this.jobId = 1;

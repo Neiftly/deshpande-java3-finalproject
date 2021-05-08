@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.SortedSet;
@@ -35,7 +36,7 @@ import javax.servlet.http.Part;
         maxFileSize = 20_971_520L //20MB
 )
 public class ApplicationServlet extends HttpServlet {
-
+    
     private Map<Integer, Application> applicationDatabase = new LinkedHashMap<>();
     private Map<Integer, Application> oldApplicationDatabase = new LinkedHashMap<>();
     private static SortedSet<Application> activeApps;
@@ -115,10 +116,10 @@ public class ApplicationServlet extends HttpServlet {
         if (action.equals("view")) {
             viewApplication(request, response);
         }
-        if(action.equals("download")){
+        if (action.equals("download")) {
             downloadAttachment(request, response);
         }
-        if(action.equals("deactivate")){
+        if (action.equals("deactivate")) {
             deactivateApplication(request, response);
         }
     }
@@ -135,46 +136,87 @@ public class ApplicationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        Application application = new Application();
         Job job = (Job) session.getAttribute("job");
         String jobTitle = job.getTitle();
+        application.setJobTitle(jobTitle);
         int jobId = job.getId();
+        application.setJobId(jobId);
         String firstName = request.getParameter("firstName");
+        if (firstName == null || firstName.equals("")) {
+            application.setFirstNameError("Please enter a First Name.");
+        } else {
+            application.setFirstNameError("");
+            application.setFirstName(firstName);
+        }
         String lastName = request.getParameter("lastName");
+        if (lastName == null || lastName.equals("")) {
+            application.setLastNameError("Please enter a Last Name.");
+        } else {
+            application.setLastNameError("");
+            application.setLastName(lastName);
+        }
         String email = request.getParameter("email");
+        if (email == null || email.equals("")) {
+            application.setEmailError("Please enter a valid Email.");
+        } else {
+            application.setEmailError("");
+            application.setEmail(email);
+        }
         String phone = request.getParameter("phone");
+        if (phone == null || phone.equals("")) {
+            application.setPhoneError("Please enter a valid Phone Number.");
+        } else {
+            application.setPhoneError("");
+            application.setPhone(phone);
+        }
         Part filePart = request.getPart("resumeUpload");
         Double desiredSalary;
         try {
             desiredSalary = Double.parseDouble(request.getParameter("desiredSalary"));
-        } catch (NullPointerException npe) {
-            desiredSalary = 15.00;
+            application.setDesiredSalary(desiredSalary);
+            application.setSalaryError("");
+        } catch (NullPointerException | NumberFormatException e) {
+            desiredSalary = 0.00;
+            application.setDesiredSalary(desiredSalary);
+            application.setSalaryError("Please Enter a valid salary.");
         }
-
+        
         LocalDate earliestStartDate;
         try {
             earliestStartDate = LocalDate.parse(request.getParameter("earliestStartDate"));
-        } catch (NullPointerException npe) {
+            application.setEarliestStartDate(earliestStartDate);
+            application.setStartDateError("");
+        } catch (NullPointerException | DateTimeParseException e) {
             earliestStartDate = LocalDate.now();
+            application.setEarliestStartDate(earliestStartDate);
+            application.setStartDateError("Please pick a valid Date.");
         }
         Attachment resumeUpload = null;
         if (filePart != null && filePart.getSize() > 0) {
             resumeUpload = processAttachment(filePart);
-
+            application.setResumeError("");
+            application.setResumeUpload(resumeUpload);
+        } else {
+            application.setResumeError("Please Upload a resume.");
         }
-
+        
         int id;
-        synchronized (this) {
-            id = APPLICATION_ID_SEQUENCE++;
-        }
-        Instant dateTimeSubmitted = Instant.now();
-        Application application = new Application(jobTitle, firstName, lastName, email, phone, resumeUpload, desiredSalary, earliestStartDate, id, jobId, dateTimeSubmitted);
+        
         if (application.hasErrors()) {
             session.setAttribute("application", application);
+            session.setAttribute("successMessage", "");
             request.getRequestDispatcher("/WEB-INF/jsp/view/job.jsp").forward(request, response);
         } else {
             synchronized (this) {
+                id = APPLICATION_ID_SEQUENCE++;
+                Instant dateTimeSubmitted = Instant.now();
+                application.setId(id);
+                application.setDateTimeSubmitted(dateTimeSubmitted);
                 applicationDatabase.put(id, application);
-                response.sendRedirect("jobs");
+                session.setAttribute("successMessage", "Application Successfully Submitted");
+                session.setAttribute("application", application);
+                request.getRequestDispatcher("/WEB-INF/jsp/view/job.jsp").forward(request, response);
             }
         }
     }
@@ -202,7 +244,7 @@ public class ApplicationServlet extends HttpServlet {
         }
         return attachment;
     }
-
+    
     private void viewApplication(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (request.getParameter("id") == null) {
@@ -212,7 +254,7 @@ public class ApplicationServlet extends HttpServlet {
         Application application = new Application();
         try {
             int id = Integer.parseInt(request.getParameter("id"));
-
+            
             for (Application a : activeApps) {
                 if (a.getId() == id) {
                     application = a;
@@ -222,11 +264,11 @@ public class ApplicationServlet extends HttpServlet {
             response.sendRedirect("applications");
             return;
         }
-
+        
         session.setAttribute("application", application);
         request.getRequestDispatcher("/WEB-INF/jsp/view/application.jsp").forward(request, response);
     }
-
+    
     private void downloadAttachment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Application application;
@@ -234,24 +276,24 @@ public class ApplicationServlet extends HttpServlet {
         try {
             application = (Application) session.getAttribute("application");
             attachment = application.getResumeUpload();
-        }catch(NullPointerException npe){
+        } catch (NullPointerException npe) {
             viewApplication(request, response);
             return;
         }
         response.setHeader("Content-Disposition", "attachment; filename=" + attachment.getName());
         response.setContentType("application/octet-stream");
-
+        
         try ( ServletOutputStream stream = response.getOutputStream()) {
             stream.write(attachment.getContents());
         }
     }
-
+    
     private void deactivateApplication(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Application application;
-        try{
+        try {
             application = (Application) session.getAttribute("application");
-        } catch(NullPointerException npe){
+        } catch (NullPointerException npe) {
             viewApplication(request, response);
             return;
         }

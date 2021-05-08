@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <t:head htmlTitle="Login/Logout"></t:head>
+    <t:head htmlTitle="Login"></t:head>
         <body>
         <t:nav></t:nav>
             <div class="container">
