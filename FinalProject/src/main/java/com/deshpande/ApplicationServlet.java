@@ -203,6 +203,7 @@ public class ApplicationServlet extends HttpServlet {
             application.setResumeUpload(resumeUpload);
         } else {
             application.setResumeError("Please Upload a resume.");
+            application.setResumeUpload(resumeUpload);
         }
         
         int id;

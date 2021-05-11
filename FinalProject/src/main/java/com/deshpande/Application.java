@@ -55,11 +55,11 @@ public class Application implements Comparable<Application>, Serializable {
     }
 
     public Application() {
-        this.jobTitle = "Job";
-        this.firstName = "J";
-        this.lastName = "Doe";
-        this.email = "J.Doe@email.com";
-        this.phone = "123-456-7890";
+        this.jobTitle = "";
+        this.firstName = "";
+        this.lastName = "";
+        this.email = "";
+        this.phone = "";
         this.resumeUpload = null;
         this.desiredSalary = 0.00;
         this.earliestStartDate = LocalDate.now();

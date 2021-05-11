@@ -45,17 +45,17 @@
                 <h2>Apply:</h2>
                 <form method="POST" action="<c:url value="/applications" />" enctype="multipart/form-data">
                     <label for="firstName">First Name:</label>
-                    <input type="text" name="firstName" id="firstName" value="${fn:escapeXml(application.firstName)}" />
+                    <input type="text" name="firstName" id="firstName" value="${fn:escapeXml(application.firstName)}" placeholder="J"/>
                     <span name="fNameError">${application.firstNameError}</span><br><br>
                     <label for="lastName">Last Name:</label>
-                    <input type="text" name="lastName" id="lastName" value="${fn:escapeXml(application.lastName)}" />
+                    <input type="text" name="lastName" id="lastName" value="${fn:escapeXml(application.lastName)}" placeholder="Doe" />
                     <span name="lNameError">${application.lastNameError}</span><br><br>
                     <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" value="${fn:escapeXml(application.email)}" />
+                    <input type="email" name="email" id="email" value="${fn:escapeXml(application.email)}" placeholder="J.Doe@email.com"/>
                     <span name="emailError">${application.emailError}</span><br><br>
                     <label for="phone">Phone:</label>
                     <input type="tel" name="phone" id="phone" 
-                           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="${fn:escapeXml(application.phone)}" />
+                           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="${fn:escapeXml(application.phone)}" placeholder="123-456-7890" />
                     <span name="phoneError">${application.phoneError}</span><br><br>
                     <label for="resumeUpload">Resume: </label>
                     <input type="file" name="resumeUpload" id="resumeUpload" value="${fn:escapeXml(application.resumeUpload)}" />
