@@ -58,7 +58,7 @@
                            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="${fn:escapeXml(application.phone)}" placeholder="123-456-7890" />
                     <span name="phoneError">${application.phoneError}</span><br><br>
                     <label for="resumeUpload">Resume: </label>
-                    <input type="file" name="resumeUpload" id="resumeUpload" value="${fn:escapeXml(application.resumeUpload)}" />
+                    <input type="file" name="resumeUpload" id="resumeUpload" value="${fn:escapeXml(application.resumeUpload.name)}" />
                     <span name="resumeUploadError">${application.resumeError}</span><br><br>
                     <label for="desiredSalary">Desired Salary:</label>
                     <input type="number" min="1" step="any" name="desiredSalary" id="desiredSalary" value="${fn:escapeXml(application.desiredSalary)}" />
