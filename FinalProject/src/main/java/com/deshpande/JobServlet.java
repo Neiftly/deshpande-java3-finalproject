@@ -222,7 +222,7 @@ public class JobServlet extends HttpServlet {
             response.sendRedirect("jobs");
             return;
         }
-        Job job = new Job();
+        Job job = null;
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             
@@ -232,6 +232,10 @@ public class JobServlet extends HttpServlet {
                 }
             }
         } catch(Exception ex) {
+            response.sendRedirect("jobs");
+            return;
+        }
+        if(job == null){
             response.sendRedirect("jobs");
             return;
         }

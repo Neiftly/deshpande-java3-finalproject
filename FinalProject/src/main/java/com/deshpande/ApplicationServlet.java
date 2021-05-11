@@ -144,6 +144,7 @@ public class ApplicationServlet extends HttpServlet {
         application.setJobId(jobId);
         String firstName = request.getParameter("firstName");
         if (firstName == null || firstName.equals("")) {
+            application.setFirstName(firstName);
             application.setFirstNameError("Please enter a First Name.");
         } else {
             application.setFirstNameError("");
@@ -151,6 +152,7 @@ public class ApplicationServlet extends HttpServlet {
         }
         String lastName = request.getParameter("lastName");
         if (lastName == null || lastName.equals("")) {
+            application.setLastName(lastName);
             application.setLastNameError("Please enter a Last Name.");
         } else {
             application.setLastNameError("");
@@ -158,6 +160,7 @@ public class ApplicationServlet extends HttpServlet {
         }
         String email = request.getParameter("email");
         if (email == null || email.equals("")) {
+            application.setEmail(email);
             application.setEmailError("Please enter a valid Email.");
         } else {
             application.setEmailError("");
@@ -165,6 +168,7 @@ public class ApplicationServlet extends HttpServlet {
         }
         String phone = request.getParameter("phone");
         if (phone == null || phone.equals("")) {
+            application.setPhone(phone);
             application.setPhoneError("Please enter a valid Phone Number.");
         } else {
             application.setPhoneError("");
@@ -215,7 +219,8 @@ public class ApplicationServlet extends HttpServlet {
                 application.setDateTimeSubmitted(dateTimeSubmitted);
                 applicationDatabase.put(id, application);
                 session.setAttribute("successMessage", "Application Successfully Submitted");
-                session.setAttribute("application", application);
+                Application blank = new Application();
+                session.setAttribute("application", blank);
                 request.getRequestDispatcher("/WEB-INF/jsp/view/job.jsp").forward(request, response);
             }
         }
@@ -251,7 +256,7 @@ public class ApplicationServlet extends HttpServlet {
             response.sendRedirect("applications");
             return;
         }
-        Application application = new Application();
+        Application application = null;
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             
@@ -264,7 +269,10 @@ public class ApplicationServlet extends HttpServlet {
             response.sendRedirect("applications");
             return;
         }
-        
+        if(application == null){
+            response.sendRedirect("applications");
+            return;
+        }
         session.setAttribute("application", application);
         request.getRequestDispatcher("/WEB-INF/jsp/view/application.jsp").forward(request, response);
     }

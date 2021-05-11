@@ -31,7 +31,7 @@
                 </p>
                 <c:set var="eSD" value="${application.earliestStartDate}" />
                 <p>Earliest Start Date:&emsp;
-                    <c:out value="${application.earliestStartDate}"/>
+                    <fmt:formatDate value="${eSD}" />
                 </p>
                 <form method="GET" action="<c:url value="/applications" />"  >                                                      
                     <input type="submit" value="Mark Inactive"/>
